@@ -17,6 +17,10 @@ q1 = [0, -1.57, 1.57, 0, 0, 0, .3, 0, 0.025, 0, 0, 0, 1]
 ## Create constraint graph
 graph = ConstraintGraph (robot, 'graph')
 
+
+
+
+
 ## Create constraint of relative position of the ball in the gripper when ball
 ## is grasped
 ballInGripper = [0, .137, 0, 0.5, 0.5, -0.5, 0.5]
@@ -28,10 +32,14 @@ ps.createTransformationConstraint ('grasp', gripperName, ballName,
 #  a configuration lies, node constraints will be checked in the order of node
 #  creation.
 graph.createNode (['grasp', 'placement'])
+
 graph.createEdge ('placement', 'placement', 'transit', 1, 'placement')
 graph.createEdge ('grasp', 'grasp', 'transfer', 1, 'grasp')
 graph.createEdge ('placement', 'grasp', 'grasp-ball', 1, 'placement')
 graph.createEdge ('grasp', 'placement', 'release-ball', 1, 'grasp')
+
+
+
 
 ## Create transformation constraint : ball is in horizontal plane with free
 ## rotation around z
@@ -46,6 +54,8 @@ ps.createTransformationConstraint ('placement/complement', '', ballName,
 ps.setConstantRightHandSide ('placement', True)
 ps.setConstantRightHandSide ('placement/complement', False)
 
+
+
 ## Set constraints of nodes and edges
 graph.addConstraints (node='placement', constraints = \
                       Constraints (numConstraints = ['placement'],))
@@ -55,6 +65,8 @@ graph.addConstraints (edge='transit', constraints = \
                       Constraints (numConstraints = ['placement/complement']))
 graph.addConstraints (edge='grasp-ball', constraints = \
                       Constraints (numConstraints = ['placement/complement']))
+
+
 # These edges are in node 'grasp'
 graph.addConstraints (edge='transfer',     constraints = Constraints ())
 graph.addConstraints (edge='release-ball', constraints = Constraints ())
