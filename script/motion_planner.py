@@ -14,19 +14,19 @@ class MotionPlanner:
 
     iter = 0
     while True:
-      #### RRT begin
-      newConfigs = list ()
+      #### RRT begin      
+      q_rand=self.robot.shootRandomConfig()
+      for index in range(nbCC):
+        q_near,_=self.ps.getNearestConfig (q_rand, connectedComponentId=index)
+        _,i,_= self.ps.directPath(q_near,q_rand,True)
+        length = self.ps.pathLength(i) 	
+        config = self.ps.configAtParam(i,length) 
+        self.ps.addConfigToRoadmap(config) 
+        self.ps.addEdgeToRoadmap(q_near,config,i,True)	
 
       ## Try connecting the new nodes together
-      for i in range (len(newConfigs)):
-        if(newConfigs(i+1)):
-          if(ps.directPath(newConfigs(i), newConfigs(i+1), 1)):
-            ps.addConfigToRoadmap(newConfigs(i+1))
-            ps.addEdgeToRoadmap(newConfigs(i),newConfigs(i+1),ps.numberPaths() -1, 1) 
-          else:
-            qr = robot.shootRandomConfig()
-            newConfigs.append(qr)
-      
+      ##for i in range (len(newConfigs)):
+      ##  pass
       #### RRT end
       ## Check if the problem is solved.
       nbCC = self.ps.numberConnectedComponents ()

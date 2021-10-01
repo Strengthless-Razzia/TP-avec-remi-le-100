@@ -18,7 +18,7 @@ vf.loadObstacleModel ("package://hpp_practicals/urdf/ur_benchmark/wall.urdf",
 q1 = [0, -1.57, 1.57, 0, 0, 0]; q2 = [0.2, -1.57, -1.8, 0, 0.8, 0]
 q3 = [1.57, -1.57, -1.8, 0, 0.8, 0]
 
-ps.setInitialConfig (q2)
+ps.setInitialConfig (q1)
 ps.addGoalConfig (q3)
 
 from motion_planner import MotionPlanner
